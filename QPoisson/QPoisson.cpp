@@ -17,12 +17,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #include "CMat.h"
 
 QPoisson::QPoisson(QWidget *parent) : QWidget(parent)
 {
-	qDebug() << QDir::currentPath();
+	//qDebug() << QDir::currentPath();
 	setGuiControl();
 	this->cvImg = nullptr; //初始化
 	this->m_coreImg = new QImage();
@@ -30,7 +29,8 @@ QPoisson::QPoisson(QWidget *parent) : QWidget(parent)
 
 QPoisson::~QPoisson()
 {
-	delete m_coreImg;
+	delete m_coreImg; 
+	m_coreImg = nullptr;
 }
 
 void QPoisson::setGuiControl()
@@ -49,7 +49,7 @@ void QPoisson::setGuiControl()
 	m_menuAct[0]->setShortcuts(QKeySequence::Open);
 	m_menuAct[1] = new QAction(QStr("保存"),this);
 	m_menuAct[1]->setShortcuts(QKeySequence::Save);
-	m_editAct[0] = new QAction(QStr("泊松"), this);
+	m_editAct[0] = new QAction(QStr("中值滤波"), this);
 	m_editAct[1] = new QAction(QStr("灰度化"), this);
 	//添加动作
 	m_menu[0]->addAction(m_menuAct[0]);
@@ -65,7 +65,7 @@ void QPoisson::setGuiControl()
 	m_pLabelOld->setGeometry(0, 25, width(), height() - 25);
 	//关联槽函数
 	connect(m_menuAct[0], &QAction::triggered, this, &QPoisson::on_open_triggered);
-	connect(m_editAct[1], &QAction::triggered, this, &QPoisson::on_clicked_diy);
+	connect(m_editAct[1], &QAction::triggered, this, &QPoisson::on_clicked_gray);
 	connect(m_editAct[0], &QAction::triggered, this, &QPoisson::on_clicked_poisson);
 }
 
@@ -107,6 +107,7 @@ void QPoisson::resizeImg()
 		m_pLabelOld->setPixmap(QPixmap(QString("../x64/Debug/images/bkg.jpg")).scaled(width(), height()));
 	}
 }
+
 //处理打开动作
 void QPoisson::on_open_triggered()
 { 
@@ -117,9 +118,12 @@ void QPoisson::on_open_triggered()
 		loadImg(m_picName);
 	} 
 }
+
 //处理 灰度化 图片
-void QPoisson::on_clicked_diy()
+void QPoisson::on_clicked_gray()
 {
+	if (this->m_picName.isEmpty())
+		return;
 	//获得 CVimg 中的实例句柄
 	cvImg = CVimg::getInstance();
 	IplImage* iplcopy = nullptr;
@@ -151,6 +155,8 @@ void QPoisson::on_clicked_diy()
 //处理 泊松 
 void QPoisson::on_clicked_poisson()
 {
+	if (this->m_picName.isEmpty())
+		return;
 	///////////////////////////////////////////////////////////////
 	//获得 CVimg 中的实例句柄
 	cvImg = CVimg::getInstance();
@@ -185,10 +191,15 @@ void QPoisson::on_clicked_poisson()
 	m_pLabelNew->show();
 	m_pLabelNew->setMinimumSize(640, 480);
 	m_pLabelNew->setPixmap(QPixmap::fromImage(img).scaled(m_pLabelNew->size()));
+	//触发resize 事件
+	connect(m_pLabelNew, &MQLabel::windowsizechanged, this, [=]()
+	{
+		m_pLabelNew->setPixmap(QPixmap::fromImage(img).scaled(m_pLabelNew->size()));
+	});
 	cvImg->releaseIpl();
 }
 
 
-
+ 
 
 

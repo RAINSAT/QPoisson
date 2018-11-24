@@ -28,7 +28,7 @@ protected:
 
 private slots:
 	void on_open_triggered();
-	void on_clicked_diy();
+	void on_clicked_gray();
 	void on_clicked_poisson();
 
 private:

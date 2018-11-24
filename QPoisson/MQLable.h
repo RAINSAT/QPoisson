@@ -4,6 +4,7 @@
 
 class MQLabel :public QLabel
 {
+	Q_OBJECT
 public:
 	MQLabel();
 	~MQLabel();
@@ -12,9 +13,12 @@ public:
 
 protected:
 	void closeEvent(QCloseEvent *event);
+	void resizeEvent(QResizeEvent *event);
+
+signals:
+	void windowsizechanged(QSize size);
 
 private:
 	const IplImage* iplLabel;
-
 };
 

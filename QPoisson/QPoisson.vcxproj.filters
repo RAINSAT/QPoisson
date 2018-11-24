@@ -53,6 +53,9 @@
     <QtMoc Include="CVimg.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="MQLable.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="QPoisson.ui">
@@ -65,9 +68,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MQLable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CMat.h">
       <Filter>Header Files</Filter>
     </ClInclude>

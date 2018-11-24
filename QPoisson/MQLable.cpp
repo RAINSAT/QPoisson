@@ -1,5 +1,5 @@
 #include "MQLable.h"
-
+#include <qevent.h>
 
 
 MQLabel::MQLabel()
@@ -21,7 +21,12 @@ void MQLabel::closeEvent(QCloseEvent *event)
 {
 	IplImage* tmp = const_cast<IplImage*>(iplLabel);
 	cvReleaseImage(&tmp);
+}
 
-	int a = 0;
+void MQLabel::resizeEvent(QResizeEvent *event)
+{
+	//获得窗口新的大小
+	QSize newSize = event->size();
+	emit windowsizechanged(newSize);
 }
 
