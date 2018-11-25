@@ -6,9 +6,11 @@
 
 QT_BEGIN_NAMESPACE
 class QMenu;
+class QToolBar;
 class QMenuBar;
 class QAction;
 class QLabel;
+class QStatusBar;
 class QImage;
 QT_END_NAMESPACE
 
@@ -36,6 +38,9 @@ private:
 	void resizeImg();
 private:
 	QMenuBar* m_menuBar;
+	QToolBar* m_toolBar;
+	QStatusBar* m_statusBar;
+
 	QMenu* m_menu[2];
 	QAction* m_menuAct[2];
 	QAction* m_editAct[2];
@@ -44,4 +49,5 @@ private:
 	//QImage* m_coreNew; //处理后的图片
 	QString m_picName; //维护的图片名
 	CVimg* cvImg; //cv
+	QLabel* m_statusLabel;
 };

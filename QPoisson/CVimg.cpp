@@ -6,13 +6,9 @@
 #include <QImage>
 #include <QDebug>
 
-//æ≤Ã¨≥ı ºªØ
-CVimg* CVimg::mImg = nullptr;
-
 // Iplimage
 CVimg::CVimg()
 {
-	qimage = nullptr;
 	iplimage = nullptr;
 }
 
@@ -21,6 +17,7 @@ CVimg::~CVimg()
 	if (iplimage != nullptr)
 	{
 		cvReleaseImage(&iplimage);
+		iplimage = nullptr;
 	}
 }
 //º”‘ÿÕº∆¨

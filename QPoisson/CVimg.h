@@ -11,17 +11,8 @@ class CVimg : public QObject
 	Q_OBJECT
 
 public:
-	//µ¥Àý
-	static CVimg* getInstance()
-	{
-		if (mImg == nullptr)
-		{
-			mImg = new CVimg();
-			return mImg;
-		}
-		else
-			return mImg;
-	}
+	CVimg();
+	~CVimg();
 
 	//¼ÓÔØÍ¼Æ¬
 	bool loadIPL(const char* filename);
@@ -35,20 +26,11 @@ public:
 	QImage MattoQImage(cv::Mat& mat);
 	cv::Mat QImage2Mat(QImage& img);
 
-	void releaseIpl() { iplimage = nullptr; };
-
 	inline IplImage* getIPL() { return iplimage; };
-
-protected:
-	CVimg();
-	~CVimg();
-
-	static CVimg* mImg;
 
 
 private:
 	IplImage* iplimage;
-	QImage* qimage;
 	
 };
 

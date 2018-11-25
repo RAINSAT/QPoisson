@@ -4,7 +4,7 @@
 
 MQLabel::MQLabel()
 {
-
+	this->iplLabel = nullptr;
 }
 
 
@@ -19,8 +19,12 @@ MQLabel::~MQLabel()
 }
 void MQLabel::closeEvent(QCloseEvent *event)
 {
-	IplImage* tmp = const_cast<IplImage*>(iplLabel);
-	cvReleaseImage(&tmp);
+	if (iplLabel)
+	{
+		IplImage* tmp = const_cast<IplImage*>(iplLabel);
+		cvReleaseImage(&tmp);
+	}
+	emit closeLabel();
 }
 
 void MQLabel::resizeEvent(QResizeEvent *event)

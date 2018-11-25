@@ -17,6 +17,7 @@ protected:
 
 signals:
 	void windowsizechanged(QSize size);
+	void closeLabel();
 
 private:
 	const IplImage* iplLabel;
